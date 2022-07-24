@@ -3,17 +3,17 @@
  */
 package com.bank.debtrenegociation.model;
 
+import java.io.Serializable;
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
-import java.util.Set;
+import java.util.List;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Entity;
-import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.ManyToMany;
-import javax.persistence.SequenceGenerator;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
 /**
@@ -22,8 +22,12 @@ import javax.persistence.Table;
  */
 @Entity
 @Table(name = "TB_OFFER", schema = "DR")
-public class Offer {
+public class Offer implements Serializable {
 
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = -8071136436863226025L;
 	@Id
 //    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "SEQ_OFFER")
 //    @SequenceGenerator(sequenceName = "SEQ_OFFER", allocationSize = 1, name = "SEQ_OFFER")
@@ -33,8 +37,8 @@ public class Offer {
 	private String description;
 	private BigDecimal value;
 	private Integer installments;
-	@ManyToMany(mappedBy = "offers", fetch = FetchType.EAGER)
-	private Set<Customer> targets;
+	@OneToMany
+	private List<Customer> targets;
 	private LocalDateTime start;
 	private LocalDateTime end;
 
@@ -62,10 +66,10 @@ public class Offer {
 	public void setInstallments(Integer installments) {
 		this.installments = installments;
 	}
-	public Set<Customer> getTargets() {
+	public List<Customer> getTargets() {
 		return targets;
 	}
-	public void setTargets(Set<Customer> targets) {
+	public void setTargets(List<Customer> targets) {
 		this.targets = targets;
 	}
 	public LocalDateTime getStart() {

@@ -14,7 +14,7 @@ import com.bank.debtrenegociation.model.Customer;
 public interface CustomerService {
 
 	void save(Customer request);
-	List<Customer> find();
-	void delete();
+	List<Customer> find(String cpf);
+	void delete(String cpf);
 	
 }

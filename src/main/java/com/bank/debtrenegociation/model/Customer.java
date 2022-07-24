@@ -3,26 +3,31 @@
  */
 package com.bank.debtrenegociation.model;
 
-import java.util.Set;
+import java.io.Serializable;
 
-import javax.persistence.CascadeType;
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.JoinTable;
-import javax.persistence.ManyToMany;
-import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
+import javax.persistence.UniqueConstraint;
+import javax.validation.constraints.NotNull;
 
 /**
  * @author Alex
  *
  */
 @Entity
-@Table(name = "TB_CUSTOMER", schema = "DR")
-public class Customer {
+@Table(name = "TB_CUSTOMER", schema = "DR"
+,uniqueConstraints = @UniqueConstraint(name="unique_document", columnNames = "document")
+)
+public class Customer implements Serializable {
+	
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 8728474519570579703L;
 	
 	@Id
 //    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "SEQ_CUSTOMER")
@@ -30,15 +35,9 @@ public class Customer {
 
     @GeneratedValue(strategy = GenerationType.AUTO)
 	private Long id;
-	private String cpf;
-	
-	@ManyToMany(cascade = CascadeType.ALL)
-	@JoinTable(
-			name = "TB_CUSTOMER_OFFERS",
-			joinColumns =  @JoinColumn(referencedColumnName = "id") ,
-			inverseJoinColumns = @JoinColumn(referencedColumnName = "id")
-			)
-	private Set<Offer> offers;
+	@NotNull
+	@Column(length = 14, nullable = false)
+	private String document;
 
 	public Long getId() {
 		return id;
@@ -48,20 +47,12 @@ public class Customer {
 		this.id = id;
 	}
 
-	public String getCpf() {
-		return cpf;
+	public String getDocument() {
+		return document;
 	}
 
-	public void setCpf(String cpf) {
-		this.cpf = cpf;
-	}
-
-	public Set<Offer> getOffers() {
-		return offers;
-	}
-
-	public void setOffers(Set<Offer> offers) {
-		this.offers = offers;
+	public void setDocument(String document) {
+		this.document = document;
 	}
 
 }
