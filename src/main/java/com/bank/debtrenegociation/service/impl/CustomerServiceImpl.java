@@ -3,10 +3,13 @@
  */
 package com.bank.debtrenegociation.service.impl;
 
+import java.util.List;
 import java.util.Objects;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.util.CollectionUtils;
+import org.springframework.util.StringUtils;
 
 import com.bank.debtrenegociation.model.Customer;
 import com.bank.debtrenegociation.repository.CustomerRepository;
@@ -34,9 +37,14 @@ public class CustomerServiceImpl implements CustomerService {
 	}
 
 	@Override
-	public Customer find(String document) {
+	public List<Customer> find(String document) {
 		log.info("[CustomerServiceImpl  - find] Starting...");
-		Customer customers = repository.findOne(CustomerSpecification.getByDocument(document)).orElse(null);
+		List<Customer> customers;
+		if (StringUtils.isEmpty(document)) {
+			customers = repository.findAll();
+		} else {
+			customers = repository.findAll(CustomerSpecification.getByDocument(document));
+		}
 		log.info("[CustomerServiceImpl  - find] Ending...");
 		return customers;
 	}
@@ -44,9 +52,11 @@ public class CustomerServiceImpl implements CustomerService {
 	@Override
 	public void delete(String document) {
 		log.info("[CustomerServiceImpl  - delete] Starting...");
-		Customer customer = find(document);
-		if (Objects.nonNull(customer)) {
+		List<Customer> customers = find(document);
+		if (!CollectionUtils.isEmpty(customers)) {
+			Customer customer = customers.get(0);
 			repository.delete(customer);
+			
 		} else {
 			log.info("[CustomerServiceImpl  - delete] No customer found...");
 		}

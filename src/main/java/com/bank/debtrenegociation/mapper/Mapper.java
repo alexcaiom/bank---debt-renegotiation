@@ -5,6 +5,8 @@ package com.bank.debtrenegociation.mapper;
 
 import java.util.Objects;
 
+import org.springframework.util.CollectionUtils;
+
 import com.bank.debtrenegociation.dto.AgreementProposalDTO;
 import com.bank.debtrenegociation.dto.CustomerDTO;
 import com.bank.debtrenegociation.dto.OfferDTO;
@@ -61,9 +63,11 @@ public class Mapper {
 			offer.setId(request.getId());
 			offer.setInstallments(request.getInstallments());
 			offer.setValue(request.getValue());
-			offer.setTargets(request.getTargets().stream().map( target -> {
-				return Mapper.Customer.to(target);
-			}).toList());
+			if (!CollectionUtils.isEmpty(offer.getTargets())) {
+				offer.setTargets(request.getTargets().stream().map( target -> {
+					return Mapper.Customer.to(target);
+				}).toList());
+			}
 			return offer;
 		}
 

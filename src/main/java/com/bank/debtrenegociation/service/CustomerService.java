@@ -3,6 +3,8 @@
  */
 package com.bank.debtrenegociation.service;
 
+import java.util.List;
+
 import com.bank.debtrenegociation.model.Customer;
 
 /**
@@ -12,7 +14,7 @@ import com.bank.debtrenegociation.model.Customer;
 public interface CustomerService {
 
 	void save(Customer request);
-	Customer find(String cpf);
+	List<Customer> find(String cpf);
 	void delete(String cpf);
 	
 }

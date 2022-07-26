@@ -35,7 +35,7 @@ public class AgreementServiceImpl implements AgreementService {
 	@Override
 	public void propose(AgreementProposalDTO request) {
 		AgreementProposal proposal = Mapper.Agreement.to(request);
-		proposal.setCustomer(customerService.find(proposal.getCustomer().getDocument()));
+		proposal.setCustomer(customerService.find(proposal.getCustomer().getDocument()).get(0));
 		proposal.setOffer(offerService.find(proposal.getOffer().getId()));
 		proposal.setStatus(ProposalStatus.PENDING);
 		repository.save(proposal);

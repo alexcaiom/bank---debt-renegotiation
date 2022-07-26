@@ -39,8 +39,11 @@ public class OfferServiceImpl implements OfferService {
 		List<Customer> targets = new ArrayList<>();
 		if (!CollectionUtils.isEmpty(request.getTargets())) {
 			for (CustomerDTO customer : request.getTargets()) {
-				Customer entity = customerService.find(customer.getDocument());
-				targets.add(entity);
+				List<Customer> customers = customerService.find(customer.getDocument());
+				if (!CollectionUtils.isEmpty(customers)) {
+					Customer entity = customers.get(0);
+					targets.add(entity);
+				}
 			}
 		}
 		offer.setTargets(targets);
