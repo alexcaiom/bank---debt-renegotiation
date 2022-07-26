@@ -4,12 +4,15 @@
 package com.bank.debtrenegociation.model;
 
 import java.io.Serializable;
+import java.util.List;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.persistence.UniqueConstraint;
 import javax.validation.constraints.NotNull;
@@ -38,6 +41,8 @@ public class Customer implements Serializable {
 	@NotNull
 	@Column(length = 14, nullable = false)
 	private String document;
+	@OneToMany(mappedBy = "customer", cascade = CascadeType.ALL)
+	private List<AgreementProposal> proposals;
 
 	public Long getId() {
 		return id;
@@ -53,6 +58,14 @@ public class Customer implements Serializable {
 
 	public void setDocument(String document) {
 		this.document = document;
+	}
+
+	public List<AgreementProposal> getProposals() {
+		return proposals;
+	}
+
+	public void setProposals(List<AgreementProposal> proposals) {
+		this.proposals = proposals;
 	}
 
 }

@@ -19,7 +19,7 @@ import lombok.NoArgsConstructor;
 public class CustomerDTO {
 
 	private Long id;
-	private String cpf;
+	private String document;
 	private Set<OfferDTO> offers;
 	
 }

@@ -3,7 +3,7 @@
  */
 package com.bank.debtrenegociation.service.impl;
 
-import java.util.List;
+import java.util.Objects;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -11,7 +11,7 @@ import org.springframework.stereotype.Service;
 import com.bank.debtrenegociation.model.Customer;
 import com.bank.debtrenegociation.repository.CustomerRepository;
 import com.bank.debtrenegociation.service.CustomerService;
-import com.bank.debtrenegociation.service.specifications.CustomerSpecification;
+import com.bank.debtrenegociation.specifications.CustomerSpecification;
 
 import lombok.extern.slf4j.Slf4j;
 
@@ -34,9 +34,9 @@ public class CustomerServiceImpl implements CustomerService {
 	}
 
 	@Override
-	public List<Customer> find(String document) {
+	public Customer find(String document) {
 		log.info("[CustomerServiceImpl  - find] Starting...");
-		List<Customer> customers = repository.findAll(CustomerSpecification.getByDocument(document));
+		Customer customers = repository.findOne(CustomerSpecification.getByDocument(document)).orElse(null);
 		log.info("[CustomerServiceImpl  - find] Ending...");
 		return customers;
 	}
@@ -44,8 +44,13 @@ public class CustomerServiceImpl implements CustomerService {
 	@Override
 	public void delete(String document) {
 		log.info("[CustomerServiceImpl  - delete] Starting...");
-		List<Customer> customers = find(document);
-		repository.deleteAll(customers);
+		Customer customer = find(document);
+		if (Objects.nonNull(customer)) {
+			repository.delete(customer);
+		} else {
+			log.info("[CustomerServiceImpl  - delete] No customer found...");
+		}
+		
 		log.info("[CustomerServiceImpl  - delete] Ending...");
 	}
 

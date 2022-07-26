@@ -1,7 +1,7 @@
 /**
  * 
  */
-package com.bank.debtrenegociation.service.specifications;
+package com.bank.debtrenegociation.specifications;
 
 import javax.persistence.criteria.CriteriaBuilder;
 import javax.persistence.criteria.CriteriaQuery;

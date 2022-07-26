@@ -37,7 +37,7 @@ public class CustomerController {
 	}
 	
 	@GetMapping
-	public List<Customer> find (String cpf) {
+	public Customer find (String cpf) {
 		return service.find(cpf);
 	}
 	

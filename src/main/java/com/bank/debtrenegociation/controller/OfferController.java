@@ -14,8 +14,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.bank.debtrenegociation.model.Customer;
-import com.bank.debtrenegociation.model.Offer;
+import com.bank.debtrenegociation.dto.OfferDTO;
 import com.bank.debtrenegociation.service.OfferService;
 
 /**
@@ -31,18 +30,18 @@ public class OfferController {
 	private OfferService service;
 
 	@PostMapping
-	public void save(@RequestBody Offer request) {
+	public void save(@RequestBody OfferDTO request) {
 		service.save(request);
 	}
 	
 	@GetMapping
-	public List<Offer> find () {
+	public List<OfferDTO> find () {
 		return service.find();
 	}
 	
 	@DeleteMapping
-	public void delete () {
-		service.delete();
+	public void delete (Long id) {
+		service.delete(id);
 	}
 	
 }
