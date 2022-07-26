@@ -26,7 +26,6 @@ import lombok.extern.slf4j.Slf4j;
  */
 @Service
 @Slf4j
-
 public class AgreementServiceImpl implements AgreementService {
 	
 	@Autowired private AgreementProposalRepository repository;
